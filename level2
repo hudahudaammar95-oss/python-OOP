@@ -1,0 +1,7 @@
+class Message:
+    def __init__(self,name,sender,the_message,date):
+        self.name=name
+        self.sender=sender
+        self.the_message=the_message
+        self.date=date
+user1=Message("Ali","Huda","Hi how are you","2026/sep/20")
