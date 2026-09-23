@@ -1,7 +1,45 @@
-class Message:
-    def __init__(self,name,sender,the_message,date):
-        self.name=name
-        self.sender=sender
-        self.the_message=the_message
-        self.date=date
-user1=Message("Ali","Huda","Hi how are you","2026/sep/20")
+import os
+import time
+def clear():
+    os.system('cls'if os.name=='nt'else 'clearg')
+names=[]
+class User:
+    def __init__(self,first_name,last_name,email,password,status):
+        self.first_name=first_name
+        self.last_name=last_name
+        self.email=email
+        self.passward=password
+        self.status=status
+    def display(self):
+        print(f'\nFisrt name: {self.first_name}')
+        print(f'Last name: {self.last_name}')
+        print(f'Email: {self.email}')
+        print(f'Status: {self.status}')
+        print("-"*30)
+def ask_user():
+    first=input('Enter your name : ')
+    last=input('enter you last name: ')
+    email_user=input('enter your email: ')
+    password=input('enter your password: ')
+    print('user added succsesfully')
+    return User(first,last,email_user,password,"Inactive")
+while True:
+    print('welcome to user mangament\n\nChoose an Action: ')
+    print('1.Add new user\n2.Display all users\n3.Exit')
+    enter=input('Enter your choice: ')
+    if enter =='1':
+        names.append(ask_user())
+    elif enter=='2':
+        clear()
+        if names:
+            print('Displaying all users.....')
+            for i in names:
+                i.display()
+            time.sleep(3)
+        else:
+            print('sorry ,didnot find any user to display.')
+    elif enter=='3':
+        print('Exiting.............')
+        break
+    else:
+        print('Inalid choice,please try againg.')
