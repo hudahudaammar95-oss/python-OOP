@@ -1,45 +1,82 @@
 import os
 import time
-def clear():
-    os.system('cls'if os.name=='nt'else 'clearg')
-names=[]
-class User:
-    def __init__(self,first_name,last_name,email,password,status):
-        self.first_name=first_name
+def clear_terminal():
+    os.system('cls'if os.name=='nt'else 'clear')
+class Members_Management:
+    def __init__(self,first_name ,last_name,id,status='inactive'):
+        self.first_name=first_name 
         self.last_name=last_name
-        self.email=email
-        self.passward=password
+        self.id=id
         self.status=status
     def display(self):
-        print(f'\nFisrt name: {self.first_name}')
-        print(f'Last name: {self.last_name}')
-        print(f'Email: {self.email}')
+        print(f'First Name: {self.first_name}')
+        print(f'Last Name: {self.last_name}')
+        print(f'ID mentorship: {self.id}')
         print(f'Status: {self.status}')
-        print("-"*30)
+        print('User Added Succussfully💖💘')
+        print('-'*30)
+found_members=[]
+def search(member):
+    clear_terminal()
+    print('Search by:\n\n1.Membership ID\n2.First name\n3.Membership Status\n')
+    choose=input('Enter your choice : ')
+    found_members=[]
+    if choose=='1':
+        id=input('enter the ID: ')
+        for i in member:
+            if i.id == id:
+                found_members.append(i)
+                break
+    elif choose=='2':
+        name=input('Enter first name: ')
+        for i in member:
+            if i.first_name==name.lower():
+                found_members.append(i)
+    elif choose=='3':
+        status=input('Enter status(active/inactive): ').strip()
+        for i in member:
+            if i.status.strip().lower()==status:
+                found_members.append(i)
+    if found_members:
+        clear_terminal()
+        print("member's found")
+        for i in found_members:
+            i.display()
+    else:
+        print('Member not found')
+
 def ask_user():
-    first=input('Enter your name : ')
-    last=input('enter you last name: ')
-    email_user=input('enter your email: ')
-    password=input('enter your password: ')
-    print('user added succsesfully')
-    return User(first,last,email_user,password,"Inactive")
+    first_name=input('Enter first name: ')
+    last_name=input('Enter last name: ')
+    id =input('Enter ID: ')
+    status=input('Enter status ,or click enter to skip: ')
+    if not status:
+        status='inactive'
+    return Members_Management(first_name,last_name,id,status)
+member=[]
 while True:
-    print('welcome to user mangament\n\nChoose an Action: ')
-    print('1.Add new user\n2.Display all users\n3.Exit')
-    enter=input('Enter your choice: ')
-    if enter =='1':
-        names.append(ask_user())
-    elif enter=='2':
-        clear()
-        if names:
-            print('Displaying all users.....')
-            for i in names:
+    print('Welcome to Member management.\n')
+    choose=input('choose an Action\n1.Add new member\n2.Display all members\n3.Search for a member\n4.Exit\n\nEnter your choice: ')
+    if choose =='1':
+        clear_terminal()
+        member.append(ask_user())
+    elif choose=='2':
+        clear_terminal()
+        if member:
+            print('Displaying all members....')
+            for i in member:
                 i.display()
-            time.sleep(3)
+                time.sleep(3)
         else:
-            print('sorry ,didnot find any user to display.')
-    elif enter=='3':
-        print('Exiting.............')
+            print('No member Found! ❌') 
+    elif choose=='3':
+        if member:
+            search(member)
+        else:
+            print('No Member in the list!')
+    elif choose=='4':
+        print('programming exiting........')
+        time.sleep(2)
         break
     else:
-        print('Inalid choice,please try againg.')
+        print('Invalid Choice.Please try one more time.')
