@@ -1,0 +1,21 @@
+done_task=[]
+ongoing_task=[]
+task=input("enter your tasl for today seperated by a comma: ").split(",")
+for i in task:
+    print(f"\n{i}\n")
+    ask=input(f"did you finish {i} already? ").lower()
+    if ask=="yes":
+        print("nice job")
+        done_task.append(i)
+    else:
+        print('try not to put it off')
+        ongoing_task.append(i)
+    print("--------")
+progress=input ("do you want to see todays progress? ").lower()
+if progress =="yes":
+    print("\n     ****Done task****\n")
+    print (done_task)
+    print("\n        ****Ongoing task****\n")
+    print (ongoing_task)
+else:
+    input("press enter to exit")

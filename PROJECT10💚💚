@@ -1,0 +1,50 @@
+import os
+import time
+contacts = {}
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    """ نسوي اداة او فانكشن حتى الكود يصير مرتب """
+
+def add_contact():
+    clear_screen()
+    contact_id = input("Enter contact ID: ").strip()
+    if contact_id in contacts:
+        print("This ID is already reserved!")
+        time.sleep(2)
+        return
+    name = input("Enter contact name: ").capitalize().strip()
+    phone = input("Enter phone number: ").strip()
+    contacts[contact_id] = {"name": name, "phone_num": phone}
+    print(f"'{contacts[contact_id]['name']}' was added successfully!")
+
+def view_contacts():
+    clear_screen()
+    if not contacts:
+        print("No contacts found.")
+        time.sleep(2)
+        return
+    for cid, info in contacts.items():
+        print(f"ID: {cid} | Name: {info['name']} | Phone: {info['phone_num']}")
+    input("Press Enter to continue...")
+
+def edit_contact():
+    clear_screen()
+    cid = input("Enter ID to edit: ").strip()
+    if cid not in contacts:
+        print("Wrong ID")
+        return
+    new_name = input("Enter new name: ").capitalize().strip()
+    new_phone = input("Enter new phone: ").strip()
+    contacts[cid] = {"name": new_name, "phone_num": new_phone}
+    print(f"'{new_name}' updated!")
+
+while True:
+    clear_screen()
+    print("\nContact Management\n1-Add\n2-View\n3-Edit\n4-Exit")
+    choice = input("Choose 1-4: ").strip()
+    if choice == '1': add_contact()
+    elif choice == '2': view_contacts()
+    elif choice == '3': edit_contact()
+    elif choice == '4': break
+    else: print('Invalid choice!!') 

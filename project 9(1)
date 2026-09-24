@@ -1,0 +1,77 @@
+import random
+try7=("""      
+                >---<  
+                      |
+                      | 
+                      |
+                      |
+                      |
+                =========== ""","""
+
+                >---< 
+                  |   |
+                      | 
+                      |
+                      |
+                      |
+                =========== ""","""
+
+                 >---<
+                  |   |
+                  O   | 
+                  |   |
+                      |
+                      |""","""
+
+                 >---<
+                  |   |
+                  O   |
+                 /|\  |
+                      |
+                      |""","""
+           
+                 >---<
+                  |   |
+                  O   |
+                 /|\  |
+                 /    |
+                      |""","""
+           
+                 >---<
+                  |   |
+                  O   |
+                 /|\  |
+                 / \  |
+                      |
+           """)
+print(try7[0])
+word=["Hello","Hoda","Ali"]
+random_word=random.choice(word).lower()
+display=["_"] *len(random_word)
+print(" ".join(display))
+lives=5
+guessed_letter=[]
+while "_" in display and lives>0:
+    guess=input("guess a letter: ").lower()
+    if guess in guessed_letter:
+        print("💢you have already guessed this letter!")
+        print(f"you have {lives} tries left! ")
+        continue
+
+    guessed_letter.append(guess)
+    if guess not in random_word:
+        lives-=1
+        print(try7[5-lives])
+        print("***WRONGE***")
+        print(f"🕳💫💨you have {lives} tries left 💔")
+    else:
+        for x in range(len(random_word)):
+            if  random_word[x] in guess:
+                display[x]=guess
+    print(" ".join(display))
+
+if lives==0:
+    print("--------YOU LOSE--------")
+    print(try7[-1])
+else:
+    print("💌-------YOU WIN--------💌")

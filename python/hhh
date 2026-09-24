@@ -1,0 +1,229 @@
+import json
+import os
+import math
+from datetime import datetime
+
+# ==========================================
+# 1. CLASS DEFINITIONS (Object-Oriented Programming)
+# ==========================================
+
+class Student:
+    """Class representing a student with academic records."""
+    def __init__(self, student_id: str, name: str):
+        self.student_id = student_id
+        self.name = name
+        self.academic_records = []  # List of course dicts
+        self.sat_scores = []         # List of SAT test dicts
+
+    def add_course_record(self, course_name: str, grade: float, credit_hours: int):
+        record = {
+            "course": course_name,
+            "grade": grade,
+            "credit_hours": credit_hours,
+            "date": datetime.now().strftime("%Y-%m-%d")
+        }
+        self.academic_records.append(record)
+
+    def add_sat_record(self, math_score: int, reading_score: int):
+        total = math_score + reading_score
+        record = {
+            "math": math_score,
+            "reading": reading_score,
+            "total": total,
+            "date": datetime.now().strftime("%Y-%m-%d")
+        }
+        self.sat_scores.append(record)
+
+    def to_dict(self):
+        return {
+            "student_id": self.student_id,
+            "name": self.name,
+            "academic_records": self.academic_records,
+            "sat_scores": self.sat_scores
+        }
+
+
+# ==========================================
+# 2. ANALYTICAL & ALGORITHMIC ENGINE
+# ==========================================
+
+class AnalyticsEngine:
+    """Algorithmic calculation engine for metrics and statistical diagnosis."""
+    
+    @staticmethod
+    def calculate_weighted_gpa(records: list) -> float:
+        """Calculates exact Weighted GPA based on credit hours."""
+        if not records:
+            return 0.0
+        total_points = sum(r["grade"] * r["credit_hours"] for r in records)
+        total_credits = sum(r["credit_hours"] for r in records)
+        return round(total_points / total_credits, 2) if total_credits > 0 else 0.0
+
+    @staticmethod
+    def calculate_standard_deviation(scores: list) -> float:
+        """Custom implementation of Standard Deviation to measure score consistency."""
+        if len(scores) < 2:
+            return 0.0
+        mean = sum(scores) / len(scores)
+        variance = sum((x - mean) ** 2 for x in scores) / (len(scores) - 1)
+        return round(math.sqrt(variance), 2)
+
+    @staticmethod
+    def sat_readiness_diagnostic(sat_records: list) -> dict:
+        """Advanced algorithmic diagnosis for Digital SAT trajectory."""
+        if not sat_records:
+            return {"status": "No Data", "recommendation": "Take at least one full practice test."}
+
+        totals = [r["total"] for r in sat_records]
+        latest_score = totals[-1]
+        avg_score = sum(totals) / len(totals)
+        consistency = AnalyticsEngine.calculate_standard_deviation(totals)
+
+        # Progression Analysis Algorithm
+        if len(totals) > 1:
+            trend = totals[-1] - totals[0]
+        else:
+            trend = 0
+
+        # Status Diagnosis
+        if latest_score >= 1480:
+            status = "Top-Tier Competitive (NYUAD / Ivy Level)"
+        elif latest_score >= 1350:
+            status = "Strong Competitive Threshold"
+        else:
+            status = "Developing Candidate"
+
+        return {
+            "latest_score": latest_score,
+            "average_score": round(avg_score, 1),
+            "score_variance_sd": consistency,
+            "overall_trend": f"+{trend}" if trend > 0 else str(trend),
+            "tier_status": status
+        }
+
+
+# ==========================================
+# 3. DATA PERSISTENCE MANAGER
+# ==========================================
+
+class DataManager:
+    """Handles JSON storage, reading, and structural verification."""
+    FILE_NAME = "academic_database.json"
+
+    @classmethod
+    def save_student(cls, student: Student):
+        data = cls.load_all_data()
+        data[student.student_id] = student.to_dict()
+        with open(cls.FILE_NAME, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+
+    @classmethod
+    def load_all_data(cls) -> dict:
+        if not os.path.exists(cls.FILE_NAME):
+            return {}
+        try:
+            with open(cls.FILE_NAME, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
+
+# ==========================================
+# 4. CLI SYSTEM INTERFACE
+# ==========================================
+
+def display_menu():
+    print("\n" + "="*45)
+    print(" 🎓 ACADEMIC ANALYTICS & SAT ENGINE (v2.0)")
+    print("="*45)
+    print("1. Create New Student Profile")
+    print("2. Add Course Grade & Credit Hours")
+    print("3. Record Digital SAT Practice Score")
+    print("4. Generate Full Diagnostic Academic Report")
+    print("5. Exit System")
+    print("="*45)
+
+def main():
+    db = DataManager.load_all_data()
+
+    while True:
+        display_menu()
+        choice = input("Select Option (1-5): ").strip()
+
+        if choice == "1":
+            s_id = input("Enter Student ID: ").strip()
+            name = input("Enter Full Name: ").strip()
+            student = Student(s_id, name)
+            DataManager.save_student(student)
+            print(f"✅ Profile created for {name}!")
+
+        elif choice == "2":
+            s_id = input("Enter Student ID: ").strip()
+            if s_id in db:
+                course = input("Course Name (e.g. AP Calculus): ").strip()
+                grade = float(input("Grade Percentage (0-100): "))
+                credits = int(input("Credit Hours (1-4): "))
+                
+                # Reconstruct object
+                st_data = db[s_id]
+                student = Student(st_data["student_id"], st_data["name"])
+                student.academic_records = st_data["academic_records"]
+                student.sat_scores = st_data["sat_scores"]
+
+                student.add_course_record(course, grade, credits)
+                DataManager.save_student(student)
+                db = DataManager.load_all_data()
+                print("✅ Course record added successfully!")
+            else:
+                print("❌ Student ID not found.")
+
+        elif choice == "3":
+            s_id = input("Enter Student ID: ").strip()
+            if s_id in db:
+                m_score = int(input("SAT Math Score (200-800): "))
+                r_score = int(input("SAT Reading/Writing Score (200-800): "))
+                
+                st_data = db[s_id]
+                student = Student(st_data["student_id"], st_data["name"])
+                student.academic_records = st_data["academic_records"]
+                student.sat_scores = st_data["sat_scores"]
+
+                student.add_sat_record(m_score, r_score)
+                DataManager.save_student(student)
+                db = DataManager.load_all_data()
+                print("✅ SAT score logged!")
+            else:
+                print("❌ Student ID not found.")
+
+        elif choice == "4":
+            s_id = input("Enter Student ID: ").strip()
+            if s_id in db:
+                st_data = db[s_id]
+                records = st_data["academic_records"]
+                sats = st_data["sat_scores"]
+
+                gpa = AnalyticsEngine.calculate_weighted_gpa(records)
+                sat_diag = AnalyticsEngine.sat_readiness_diagnostic(sats)
+
+                print("\n" + "📊 ACADEMIC DIAGNOSTIC REPORT ".center(50, "-"))
+                print(f"Student: {st_data['name']} (ID: {st_data['student_id']})")
+                print(f"Weighted GPA: {gpa} / 100")
+                print("-" * 50)
+                print("SAT Trajectory Analysis:")
+                print(f" - Latest Total Score: {sat_diag.get('latest_score', 'N/A')}")
+                print(f" - SAT Average: {sat_diag.get('average_score', 'N/A')}")
+                print(f" - Consistency (Std Dev): {sat_diag.get('score_variance_sd', 'N/A')}")
+                print(f" - Overall Progress Trend: {sat_diag.get('overall_trend', 'N/A')}")
+                print(f" - Status Classification: {sat_diag.get('tier_status', 'N/A')}")
+                print("-" * 50)
+            else:
+                print("❌ Student ID not found.")
+
+        elif choice == "5":
+            print("Exiting engine. Goodbye!")
+            break
+        else:
+            print("Invalid selection. Try again.")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,23 @@
+item=[]
+price=[]
+print("welcome to ishoooop calculatou.")
+ask=int(input("how many items are there in yout basket today ? "))
+print('let us get continue them....')
+for i in range(0,ask):
+    item_user=input(f"please  tell me the name of the item number {i+1}\n ")
+    item.append(item_user)
+    price_user=int(input(f'what is the price of {item_user}\n '))
+    price.append(price_user)
+    print("*****")
+
+option=input("would you like to see your entire basket items? ")
+if option=="yes":
+    print(item)
+else:
+    input("press enter to exit")
+cost=input("would you like to see how much ot will cost? ")
+if cost=="yes":
+    print("buying this costs : ")
+    print(sum(price))
+else:
+    input("press enter to exit.")

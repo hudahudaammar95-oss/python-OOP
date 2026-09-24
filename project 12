@@ -1,0 +1,100 @@
+import time
+import os
+currency={
+    "USD":1,
+    "EUR":0.85,
+    "EGP":30.9,
+    "RMB":6.5,}
+#RMB chines/#EUR yoro
+def screen():
+    if os.name=='nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+def sleep():
+    print('Analyzing your request....Please wait.')
+    time.sleep(1)
+    print(f"Checking for {convert} best rates acailable........please wait")
+    time.sleep(2)
+    print(f'Getting a discount price for {choose}.....please wait')
+    time.sleep(1)
+    screen()
+    print(f'Prepating the deal from {choose} to {convert}.......please wait')
+    time.sleep(2)
+
+asc=(""" 
+   ||====================================================================||
+   ||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||
+   ||(100)==================| FEDERAL RESERVE NOTE |================(100)||
+   ||\\$//        ~         '------========--------'                \\$//||
+   ||<< /        /$\              // ____ \\                         \ >>||
+   ||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||
+   ||<<|        \\ //           || <||  >\  ||                        |>>||
+   ||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||====================================================================||>||
+||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||<||
+||(100)==================| FEDERAL RESERVE NOTE |================(100)||>||
+||\\$//        ~         '------========--------'                \\$//||\||
+||<< /        /$\              // ____ \\                         \ >>||)||
+||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||/||
+||<<|        \\ //           || <||  >\  ||                        |>>||=||
+||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||<<|      L38036133B        *\\  |\_/  //* series                 |>>||
+||>>|  12                     *\\/___\_//*   1989                  |<<||
+||<<\      Treasurer     ______/Franklin\________     Secretary 12 />>||
+||//$\                 ~|UNITED STATES OF AMERICA|~               /$\\||
+||(100)===================  ONE HUNDRED DOLLARS =================(100)||
+||\\$//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\$//||
+||====================================================================||
+
+""")
+
+while True:
+        print(asc)
+        print("USD: 1.0\nEUR: 0.85\nEGP: 30.9\nRMB: 6.5")
+        choose=(input('choose a currncy to convrt from: ')).upper()
+        amount=float(input('enter the amount: '))
+        confirm=input(f'you enter {amount} {choose}.Confirm?(y/n): ').lower()
+        
+        if confirm=='y':
+            screen()
+            convert=input('choose a currency to convert to : ').upper()
+            sleep()
+            if choose in currency and convert in currency:
+                divition1=currency[choose]
+                divition2=currency[convert]
+                rate=divition2/divition1
+                result=amount*rate
+                print(f'Exchange Rate : 1 {choose}= {rate:.4f} {convert}')
+                print(f'{amount} {choose} is equal to ${result:.3f} {convert}')
+                transaction=input('do you want to accept this transaction? (y/ n): ').lower()
+                if transaction =='y':
+                    print('the transaction succeed💌')
+                    time.sleep(2)
+
+                else: 
+                    print('The transaction failed!!!💔')
+                    turn= input('do you want to convert another coin?y/n:  ').lower()
+                    if turn  =='y':
+                        screen()
+                        continue
+                    else:
+                        print('Exiting .........')
+                        break
+            else:
+                print('Invalid choice .Coversiion canceled.')
+                time.sleep(2)
+                screen()
+                continue
+            
+        else:
+            continue
+    
+        
+
+
+
+
+
+

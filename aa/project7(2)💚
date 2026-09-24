@@ -1,0 +1,75 @@
+import time
+import os
+books={}
+def clear():
+    os.system("cls" if os.name=="nt"else"clear")
+def add_book():
+    while True:
+        clear()
+        isbn=input('enter ISBN: ')
+        title=input('Enter Title: ').capitalize()
+        author=input('enter author: ').capitalize()
+        books[isbn]={
+            "title":title,
+            "author":author,
+            "available":True
+        }
+        print(f'Book 💝{title}💝 by "🌿{author}🌿" with ISBN 💢{isbn}💢 was added successfully!!')
+        another_book=input('do you want to add another book?y/n: ').lower()
+        if another_book!='y':
+            break
+def check_out():
+    while True:
+        clear()
+        isbn=input('enter ISBN to check out: ')
+        if isbn in books and books[isbn]['available']:
+            print(f'Book "{books[isbn]['title']}" checked out successfully.')
+            books[isbn]['available']=False
+        elif isbn in books and not books[isbn]['available']:
+            print('sorry this book was checked out!!!💔')
+        else:
+            print('Invalid ISBN')
+        another_book=input('do you want to check out another book?y/n: ').lower()
+        if another_book!='y':
+            break
+def check_in():#يرجع كتاب كان مستعار 
+    while True:
+        clear() 
+        isbn=input('Enter ISBN to  check in: ')
+        if isbn in books and books[isbn]['available']==False:
+            print(f'book "{books[isbn]['title']}" was added successfully.')
+            books[isbn]['available']=True
+        elif isbn in books:
+            print('this book is already in the catalog!!! ')
+        else:
+            print('book not found in the catalog💔.')
+        another_book=input('do you want to check in anothe book?y/n: ').lower()
+        if another_book!='y':
+            break
+def list_books():
+    clear()
+    for items in books:
+        print(f'ISBN: {items} | Title: {books[items]['title']} | Author: {books[items]['author']} | Available: {books[items]['available']}')
+        time.sleep(1.5)
+def finish_program():
+    clear()
+    print('program finished.........')
+    exit()
+def start():
+    while True:
+        
+        print("""Menu:\n1.Add Book\n2.Check Out book\n3.check In Book\n4.List books\n5.Exit """)
+        choice=input('enter your choice: ')
+        if choice=='1':
+            add_book()
+        elif choice=='2':
+            check_out()
+        elif choice=='3':
+            check_in()
+        elif choice=='4':
+            list_books()
+        elif choice=='5':
+            exit()
+        else:
+            print('Invalid choice please follow the instructions!!!')
+start()

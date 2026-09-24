@@ -1,0 +1,18 @@
+import random
+import string
+print('welcome to the password generator!')
+let=string.ascii_letters
+num=string.digits
+sym=string.punctuation
+
+enter =int(input("Enter the tatal number of letters in the password: "))
+letters=int(input("enter the number of letters in the password: "))
+numbers=int(input("enter the number of numbers in the password: "))
+symbols=int(input("enter the number of synbols in the password: "))
+ 
+if letters + numbers + symbols != enter:
+    print("Invalid input ,The sum of letters,numbers, and symbols does n ot match the password.")
+else:
+    ran=(random.choices(let,k=letters) + random.choices(num,k=numbers)+random.choices(sym,k=symbols) )
+    random.shuffle(ran)
+    print ("the computer chose this password: ","".join(ran))

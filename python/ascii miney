@@ -1,0 +1,96 @@
+import time
+import os
+asc=(""" 
+   ||====================================================================||
+   ||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||
+   ||(100)==================| FEDERAL RESERVE NOTE |================(100)||
+   ||\\$//        ~         '------========--------'                \\$//||
+   ||<< /        /$\              // ____ \\                         \ >>||
+   ||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||
+   ||<<|        \\ //           || <||  >\  ||                        |>>||
+   ||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||====================================================================||>||
+||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||<||
+||(100)==================| FEDERAL RESERVE NOTE |================(100)||>||
+||\\$//        ~         '------========--------'                \\$//||\||
+||<< /        /$\              // ____ \\                         \ >>||)||
+||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||/||
+||<<|        \\ //           || <||  >\  ||                        |>>||=||
+||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||<<|      L38036133B        *\\  |\_/  //* series                 |>>||
+||>>|  12                     *\\/___\_//*   1989                  |<<||
+||<<\      Treasurer     ______/Franklin\________     Secretary 12 />>||
+||//$\                 ~|UNITED STATES OF AMERICA|~               /$\\||
+||(100)===================  ONE HUNDRED DOLLARS =================(100)||
+||\\$//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\$//||
+||====================================================================||
+
+""")
+
+money={'USD':1.0,'EUR':0.85,'EGP':30.9,'RMB':6.5}
+
+""" USD #Dollar(US)
+    EUR #Euro(European Union countries)
+    EGP #Egyptian Pound(Egypt)
+    RMB #Yaun(China)
+"""
+
+def clear_terminal():
+    os.system('cls')if os.name=='nt'else os.system('clear')
+
+def waiting():
+    print('Analize your request.....please wait')
+    time.sleep(2)
+    print(f"Checking for {currency}'s best rants availabe........please wait")
+    time.sleep(2)
+    print(f'Getting a dicount price for {convert_currency}....Please wait.')
+    time.sleep(2)
+
+def calculate(from_currency,to_currency):
+    result=money[to_currency]/money[from_currency]
+    return (result)
+
+while True:
+    clear_terminal()
+    print(asc)
+    print("USD:1.0\nEUR:0.85\nEGP:30.9\nRMB:6.5")
+    convert_currency=(input('Choose a currency to convert from: ')).upper()#العمله الي تريد تحولها ل.....
+    while True:
+        amount=float(input('Enter the amount: '))
+        confirm=input(f'you entered {amount} {convert_currency}.Confirm?(y/n): ').lower()
+        if confirm!='y':
+            continue
+        else:
+            clear_terminal()
+            currency=(input('Choose a currency to convert to: ')).upper()
+            waiting()
+            if currency not in money or convert_currency not in money:
+                print('Invalid currecy,conversion cancelled!!❌')
+                time.sleep(2)
+                clear_terminal()
+                break
+            else:
+                clear_terminal()
+                final_result=calculate(convert_currency,currency)
+                final_result2=  amount *final_result
+
+                print(f'Preparing the deal from {convert_currency} to {currency} ...please wait')
+                time.sleep(2)
+                print(f'Exchange Rate: 1 {convert_currency} = {round(final_result,2)} {currency}')
+                time.sleep(2)
+                print(f'{amount} {convert_currency} is equal to {round(final_result2,2)} USD')
+                time.sleep(2)
+                transaction=input('Do you accept this transaction?y/n: ').lower()
+                if transaction=='n':
+                    print('transaction calceled')
+                    
+                else:
+                    print('Transaction has success.')
+                perform=input('Do you want to perform another conversion?y/n: ').lower()
+                if perform=='y':
+                    break
+                else:
+                    print('program finished......')
+                    exit()
+                
+

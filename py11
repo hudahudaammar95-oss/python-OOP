@@ -1,0 +1,108 @@
+import os
+library_catalog={}
+def screen():
+    if os.name=='nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
+def add_book():
+    while True:
+        screen()
+        isbn=input('Enter ISbN: ')
+        title=input('Enter Title: ').capitalize()
+        author =input('Enter author: ').capitalize()
+        print(f'Book 💛{title}💛 by the author ❤ {author}❤ added to library with ISBN 💛{isbn}💛')
+        library_catalog[isbn]={'title':title,'author':author,'available':True}
+        choice=input('do you want to add another book?(y/n):  ').lower()
+        if choice!="y":
+            break
+
+def check_out_book():
+    while True:
+        screen()
+        isbn=input('Enter isbn to check out: ')
+        if isbn in library_catalog:
+            if library_catalog[isbn]['available']:
+                library_catalog[isbn]['available']=False
+                print(f'Book "{library_catalog[isbn]['title']}" is checked out successfully! ')
+            else:
+                print('sorry ,somebody else check out this book!')
+        else:
+            print('this book is not available in library catalog!')
+        choice=input('do you want to check out another book?(y/n): ').lower()
+        if choice !='y':
+            break
+
+def check_in_book():
+    while True:
+        screen()
+        isbn=input('Enter ISBN to check in : ')
+        if isbn in library_catalog:
+            if not library_catalog[isbn]['available']:
+                library_catalog[isbn]['available']=True
+                print(f'Book "{library_catalog[isbn]['title']}" is checked in successfullly')
+            else:
+                print('💢This book is already in library catalog!')
+        else:
+            print('sorry this book is not in library catalog!')
+        choice=input('do you want to check in another book?(y/n): ').lower()
+        if choice!='y':
+            break
+
+def list_book():
+    while True:
+        screen()
+        print('library catalog')
+        for isbn in library_catalog:
+            
+            print(f'ISBN: {isbn}, Title: {library_catalog[isbn]['title']} ,Author: {library_catalog[isbn]['author']}, Available: {library_catalog[isbn]['available']}')
+        choice =input('do you want to go to the menu?(y/n): ').lower()
+        if choice=='y':
+            break
+
+
+while True:
+    screen()
+    print("""\nMenu\n1.Add book\n2.check out book\n3.check in book\n4.list book\n5.Exit""")
+    enter =input('enter  a number between 1 to 5: ')
+    if enter =='1':
+        add_book()
+    elif enter =='2':
+        check_out_book()
+    elif enter =='3':
+        check_in_book()
+    elif enter=='4':
+        list_book()
+    elif enter =='5':
+        print('the program has finished')
+        break
+    else:
+        print('Invalid choice you have to choose number between 1 to 5!')
+
+asc=(""" 
+   ||====================================================================||
+   ||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||
+   ||(100)==================| FEDERAL RESERVE NOTE |================(100)||
+   ||\\$//        ~         '------========--------'                \\$//||
+   ||<< /        /$\              // ____ \\                         \ >>||
+   ||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||
+   ||<<|        \\ //           || <||  >\  ||                        |>>||
+   ||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||====================================================================||>||
+||//$\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\//$\\||<||
+||(100)==================| FEDERAL RESERVE NOTE |================(100)||>||
+||\\$//        ~         '------========--------'                \\$//||\||
+||<< /        /$\              // ____ \\                         \ >>||)||
+||>>|  12    //L\\            // ///..) \\         L38036133B   12 |<<||/||
+||<<|        \\ //           || <||  >\  ||                        |>>||=||
+||>>|         \$/            ||  $$ --/  ||        One Hundred     |<<||
+||<<|      L38036133B        *\\  |\_/  //* series                 |>>||
+||>>|  12                     *\\/___\_//*   1989                  |<<||
+||<<\      Treasurer     ______/Franklin\________     Secretary 12 />>||
+||//$\                 ~|UNITED STATES OF AMERICA|~               /$\\||
+||(100)===================  ONE HUNDRED DOLLARS =================(100)||
+||\\$//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\\$//||
+||====================================================================||
+
+""")

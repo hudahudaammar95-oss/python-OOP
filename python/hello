@@ -1,0 +1,18 @@
+import string
+lower=string.ascii_lowercase
+upper=string.ascii_uppercase
+message=input('enter message: ').lower()
+shift=int(input('enter number shift: '))
+encrypted_message=''
+for letter in message:
+    if letter.islower():
+        position=(lower.index(letter)+shift)%26
+        final=lower[position]
+        encrypted_message+=final
+    elif letter.isupper():
+        position=(upper.index(letter)+shift)%26
+        final=upper[position]
+        encrypted_message+=final
+    else:
+        encrypted_message+=letter
+print(encrypted_message)

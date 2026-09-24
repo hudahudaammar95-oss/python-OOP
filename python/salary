@@ -1,0 +1,16 @@
+import time
+def sleep():
+    print('checking user name........')
+    time.sleep(2)
+    print('Validating email adress.....')
+    time.sleep(2)
+def validate(name,email):
+    sleep()
+    if "." in email and "@" in email:
+        return True
+    else:
+        print('Invalid email format. Registration failed.')
+user_name=input('enter your name: ').capitalize()
+user_email =input('Enter your email: ')
+validate(user_name,user_email)
+print(f'user {user_name } with email: "{user_email}" is correct ')

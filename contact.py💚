@@ -1,0 +1,53 @@
+import time
+import os
+contact={}
+def clear():
+        os.system(('cls')if os.name=='nt'else"clear")
+def add_contact():
+    clear()
+    id_c=input('enter the contact ID: ')
+    if id_c not in contact:
+        name=input('please typr a name: ').capitalize()
+        phone_num=input('please type a phone number: ')
+        contact[id_c]={
+            'name':name,
+            'phone_num':phone_num}
+        print(f'"{contact[id_c]['name']}" was added successfully....✔💚\n')
+    else:
+        print('this ID is reserved')
+def view_contact():
+    clear()
+    for info in contact:
+        print(f'"ID":{info}, "Name": {contact[info]['name']}, "Phone Number": {contact[info]['phone_num']} ')
+    time.sleep(3)
+def edit_contact():
+    clear()
+    id_c=input('enter an ID edit : ')
+    if id_c in contact:
+        name=input('enter a new name: ').capitalize()
+        phone_num=input('enter a new number:')
+        contact[id_c]={
+            'name':name,
+            'phone_num':phone_num}
+        print(f'"{contact[id_c]['name']}" was added successfully✔💚')
+    else:
+        print('wrong id please type again')       
+def exit_program():
+    print('program finished.........')
+    exit()
+while True:
+    print("""Contact managment\n1-Add a contact\n2View a contact\n3-Edita contact\n4-exit """)
+    choose=input('choose a number(1 to 4): ')
+    if choose=='1':
+        add_contact()
+    elif choose=='2':
+        view_contact()
+    elif choose=='3':
+        edit_contact()
+    elif choose=='4':
+        exit_program()
+    else:
+        print('Invalid choice please choose one number between 1 to 4:💢💢💢 ')
+        time.sleep(1)
+        continue
+
